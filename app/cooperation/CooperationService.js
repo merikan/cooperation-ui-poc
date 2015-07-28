@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('cooperationApp')
-  .factory('FooService', function () {
+  .factory('CooperationService', function () {
 
     //var self = this;
 

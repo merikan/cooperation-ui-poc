@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('cooperationApp')
-  .controller('FooCtrl',
-    function ($scope, FooService) {
+  .controller('CooperationCtrl',
+    function ($scope, CooperationService) {
 
-      $scope.bar = FooService.getFoo();
+      $scope.bar = CooperationService.getFoo();
 
     });
