@@ -61,18 +61,59 @@ module.exports = function (grunt) {
         hostname: '0.0.0.0',
         livereload: 35729
       },
+      proxies: [
+        {
+          context: '/v1',
+          host: 'localhost',
+          port: 8080,
+          https: false,
+          changeOrigin: true,
+          rewrite: {
+            '^/v1': '/v1'
+          },
+          headers: {
+            accept: 'application/json'
+          }
+        }
+      ],
       livereload: {
         options: {
-          open: true,
-          middleware: function (connect) {
-            return [
-              connect.static('.tmp'),
-              connect().use(
-                '/bower_components',
-                connect.static('./bower_components')
-              ),
-              connect.static(appConfig.app)
-            ];
+          open: false,
+          base: [
+            '.tmp',
+            '<%= yeoman.app %>'
+          ],
+          middleware: function (connect, options) {
+            var middlewares = [];
+
+            if (!Array.isArray(options.base)) {
+              options.base = [options.base];
+            }
+
+            // Setup the proxy
+            middlewares.push(require('grunt-connect-proxy/lib/utils').proxyRequest);
+
+            // Serve static files
+            options.base.forEach(function(base) {
+              middlewares.push(connect.static(base));
+            });
+
+            middlewares.push(connect().use(
+              '/bower_components',
+              connect.static('./bower_components')
+            ));
+
+
+            return middlewares;
+            //
+            //return [
+            //  connect.static('.tmp'),
+            //  connect().use(
+            //    '/bower_components',
+            //    connect.static('./bower_components')
+            //  ),
+            //  connect.static(appConfig.app)
+            //];
           }
         }
       },
@@ -377,6 +418,7 @@ module.exports = function (grunt) {
       'wiredep',
       'concurrent:server',
       'replace:development',
+      'configureProxies:server',
       'connect:livereload',
       'watch'
     ]);
