@@ -1,22 +1,47 @@
 <div>
   <div class="row">
-    <div class="col-md-4">first dropdown</div>
-    <div class="col-md-8">second dropdown</div>
+    <div class="col-md-4">
+      <select class="form-control" ng-options="cp as (cp.platform + ' ' + cp.environment) for cp in connectionPoints" ng-model="selectedConnectionPoint">
+        <option style="display:none" value="">Välj</option>
+      </select>
+    </div>
+    <div class="col-md-8">
+      <!--<select ng-show="selectedConnectionPoint" class="form-control" ng-options="sc as (sc.description + ' / ' + sc.hsaId) for sc in serviceConsumers" ng-model="MEP">-->
+        <!--<option style="display:none" value="">Välj</option>-->
+      <!--</select>-->
+
+      <ui-select ng-show="selectedConnectionPoint" ng-model="selectedServiceConsumer.selected"
+                 theme="bootstrap"
+                 reset-search-input="false">
+        <ui-select-match placeholder="Välj eller sök">{{$select.selected.description}} / {{$select.selected.hsaId}}</ui-select-match>
+        <ui-select-choices repeat="sc in filterServiceConsumers() track by $index"
+                           refresh="filterServiceConsumers($select.search)"
+                           refresh-delay="0">
+          <span ng-bind-html="sc.description | highlight: $select.search"></span>
+          <span>/</span>
+          <span ng-bind-html="sc.hsaId | highlight: $select.search"></span>
+        </ui-select-choices>
+      </ui-select>
+    </div>
   </div>
 
-  <div class="row">
+  <div class="row" ng-show="cooperations">
     <div class="col-md-12">
-      <h3>Etablerade anslutningar {{bar}}</h3>
+      <h3>Etablerade anslutningar</h3>
       <table class="table">
         <thead>
-          <tr>
-            <th>Tjänstekontrakt</th>
-            <th>Version</th>
-            <th>Logisk adress</th>
-          </tr>
+        <tr>
+          <th>Tjänstekontrakt</th>
+          <th>Version</th>
+          <th>Logisk adress</th>
+        </tr>
         </thead>
         <tbody>
-
+        <tr ng-repeat="cooperation in cooperations | orderBy: ['serviceContract.name', 'logicalAddress.description']">
+          <td>{{cooperation.serviceContract.name}}</td>
+          <td>{{cooperation.serviceContract.major}}.{{cooperation.serviceContract.minor}}</td>
+          <td>{{cooperation.logicalAddress.description}}</td>
+        </tr>
         </tbody>
       </table>
     </div>

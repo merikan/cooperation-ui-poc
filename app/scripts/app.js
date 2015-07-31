@@ -4,7 +4,9 @@ angular
   .module('cooperationApp', [
     'services.config',
     'ui.router',
-    'ui.bootstrap'
+    'ui.bootstrap',
+    'ui.select',
+    'ngSanitize'
   ])
   .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
 
