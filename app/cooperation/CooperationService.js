@@ -38,7 +38,8 @@ angular.module('cooperationApp')
       $http.get('/v1/cooperations', {
         params: {
           connectionPointId: connectionPointId,
-          serviceConsumerId: serviceConsumerId
+          serviceConsumerId: serviceConsumerId,
+          include: 'logicalAddress,serviceContract'
         }
       })
         .success(function (data) {

@@ -6,15 +6,11 @@
       </select>
     </div>
     <div class="col-md-8">
-      <!--<select ng-show="selectedConnectionPoint" class="form-control" ng-options="sc as (sc.description + ' / ' + sc.hsaId) for sc in serviceConsumers" ng-model="MEP">-->
-        <!--<option style="display:none" value="">Välj</option>-->
-      <!--</select>-->
-
       <ui-select ng-show="selectedConnectionPoint" ng-model="selectedServiceConsumer.selected"
                  theme="bootstrap"
                  reset-search-input="false">
         <ui-select-match placeholder="Välj eller sök">{{$select.selected.description}} / {{$select.selected.hsaId}}</ui-select-match>
-        <ui-select-choices repeat="sc in filterServiceConsumers() track by $index"
+        <ui-select-choices repeat="sc in filteredServiceConsumers track by $index"
                            refresh="filterServiceConsumers($select.search)"
                            refresh-delay="0">
           <span ng-bind-html="sc.description | highlight: $select.search"></span>

@@ -17,6 +17,7 @@ angular.module('cooperationApp')
         console.log('connection point selected', connectionPoint);
         CooperationService.getServiceConsumers(connectionPoint.id).then(function (data) {
           $scope.serviceConsumers = data;
+          $scope.filteredServiceConsumers = data;
         });
       }
     });
@@ -31,13 +32,15 @@ angular.module('cooperationApp')
       }
     });
 
+    $scope.filteredServiceConsumers = [];
+
     $scope.filterServiceConsumers = function(filterBy) {
       if (!_.isUndefined(filterBy)) {
-        return _.filter($scope.serviceConsumers, function(serviceConsumer) {
+        $scope.filteredServiceConsumers = _.filter($scope.serviceConsumers, function (serviceConsumer) {
           return serviceConsumer.hsaId.indexOf(filterBy) > -1 || serviceConsumer.description.indexOf(filterBy) > -1;
         });
       } else {
-        return $scope.serviceConsumers;
+        $scope.filteredServiceConsumers = $scope.serviceConsumers;
       }
     };
 
