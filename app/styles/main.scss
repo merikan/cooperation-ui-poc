@@ -7,3 +7,11 @@ $fa-font-path: "../bower_components/components-font-awesome/fonts";
 
 @import "bootswatch";
 @import "ui-select";
+
+//table header fix
+.table {
+  &-bordered > thead > tr > th,
+  &-bordered > thead > tr > td {
+    border-bottom: 2px solid $table-border-color;
+  }
+}
