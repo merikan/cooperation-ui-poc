@@ -33,9 +33,18 @@
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="cooperation in cooperations | orderBy: ['serviceContract.name', 'logicalAddress.description']">
-          <td>{{cooperation.serviceContract.name}}</td>
-          <td>{{cooperation.serviceContract.major}}.{{cooperation.serviceContract.minor}}</td>
+        <tr ng-repeat="cooperation in (orderedCooperations = cooperations | orderBy: ['serviceContract.name', 'logicalAddress.description'])"
+            ng-init="prevContractSame = orderedCooperations[$index - 1] && orderedCooperations[$index - 1].serviceContract.name === cooperation.serviceContract.name">
+          <td>
+            <span ng-hide="prevContractSame">
+              {{cooperation.serviceContract.name}} {{apa.serviceContract.name}}
+            </span>
+          </td>
+          <td>
+            <span ng-hide="prevContractSame">
+              {{cooperation.serviceContract.major}}.{{cooperation.serviceContract.minor}}
+            </span>
+          </td>
           <td>{{cooperation.logicalAddress.description}}</td>
         </tr>
         </tbody>
