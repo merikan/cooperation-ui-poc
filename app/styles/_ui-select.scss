@@ -1,0 +1,10 @@
+//ui-select fixes
+.ui-select-bootstrap {
+  .btn-default {
+    @include button-variant($input-color, $input-bg, $input-border);
+    color: $input-color;
+    > .text-muted {
+      color: $input-color;
+    }
+  }
+}
