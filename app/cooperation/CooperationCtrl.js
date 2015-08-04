@@ -36,8 +36,11 @@ angular.module('cooperationApp')
 
     $scope.filterServiceConsumers = function(filterBy) {
       if (!_.isUndefined(filterBy)) {
+        var filterByLower = filterBy.toLowerCase();
         $scope.filteredServiceConsumers = _.filter($scope.serviceConsumers, function (serviceConsumer) {
-          return serviceConsumer.hsaId.indexOf(filterBy) > -1 || serviceConsumer.description.indexOf(filterBy) > -1;
+          var hsaIdLower = serviceConsumer.hsaId.toLowerCase();
+          var descriptionLower = serviceConsumer.description.toLowerCase();
+          return hsaIdLower.indexOf(filterByLower) > -1 || descriptionLower.indexOf(filterByLower) > -1;
         });
       } else {
         $scope.filteredServiceConsumers = $scope.serviceConsumers;
