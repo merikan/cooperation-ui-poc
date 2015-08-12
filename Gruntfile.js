@@ -63,13 +63,13 @@ module.exports = function (grunt) {
       },
       proxies: [
         {
-          context: '/v1',
+          context: '/cooperation/v1',
           host: 'localhost',
           port: 8080,
           https: false,
           changeOrigin: true,
           rewrite: {
-            '^/v1': '/v1'
+            '/cooperation/v1': '/v1'
           },
           headers: {
             accept: 'application/json'
@@ -307,6 +307,7 @@ module.exports = function (grunt) {
           expand: true,
           cwd: '<%= yeoman.dist %>',
           src: [
+            '**/*.html',
             '*.html',
             'views/{,*/}*.html',
             'templates/{,*/}*.html'
@@ -358,9 +359,7 @@ module.exports = function (grunt) {
           src: [
             '*.{ico,png,txt}',
             '.htaccess',
-            '*.html',
-            'views/{,*/}*.html',
-            'templates/{,*/}*.html',
+            '**/*.html',
             'images/{,*/}*.{webp}',
             'fonts/{,*/}*.*'
           ]
@@ -431,11 +430,11 @@ module.exports = function (grunt) {
     'concurrent:dist',
     'replace:production',
     //'concat',
-    'ngAnnotate',
     'copy:dist',
     'cdnify',
     //'uglify',
     'concat:generated',
+    'ngAnnotate',
     'cssmin:generated',
     'uglify:generated',
     'filerev',

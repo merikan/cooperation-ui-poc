@@ -1,11 +1,11 @@
 'use strict';
 
 angular.module('cooperationApp')
-  .factory('CooperationService', function ($q, $http) {
+  .factory('CooperationService', function ($q, $http, configuration) {
 
     var getConnectionPoints = function () {
       var deferred = $q.defer();
-      $http.get('/v1/connectionPoints')
+      $http.get(configuration.basePath + '/connectionPoints')
         .success(function (data) {
           console.log('connection points', data);
           deferred.resolve(data);
@@ -18,7 +18,7 @@ angular.module('cooperationApp')
 
     var getServiceConsumers = function (connectionPointId) {
       var deferred = $q.defer();
-      $http.get('/v1/serviceConsumers', {
+      $http.get(configuration.basePath + '/serviceConsumers', {
         params: {
           connectionPointId: connectionPointId
         }
@@ -35,7 +35,7 @@ angular.module('cooperationApp')
 
     var getCooperations = function(connectionPointId, serviceConsumerId) {
       var deferred = $q.defer();
-      $http.get('/v1/cooperations', {
+      $http.get(configuration.basePath + '/cooperations', {
         params: {
           connectionPointId: connectionPointId,
           serviceConsumerId: serviceConsumerId,
